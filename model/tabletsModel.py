@@ -1,4 +1,4 @@
-from materiais import Material
+from materiaisModel import Material
 from bd import _executar
 
 class Tablet(Material):
