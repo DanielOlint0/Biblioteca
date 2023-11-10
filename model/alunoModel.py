@@ -1,5 +1,5 @@
 from bd import _executar
-from usuario import Usuario
+from usuarioModel import Usuario
 
 class Aluno(Usuario):
     def __init__(self, nome, idade, multa, qDeEmprestimos, curso, id=None):

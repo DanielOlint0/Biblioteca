@@ -1,5 +1,5 @@
-from materiaisModel import Material
 from bd import _executar
+from model.materiaisModel import Material
 
 class Livro(Material):
     def __init__(self, nome, codigo, data, quantidade, status, codigoTitulo, autor, editora, id=None):
@@ -8,6 +8,10 @@ class Livro(Material):
         self.__autor = autor
         self.__editora = editora
         self.__id = id
+        self.__nome = nome
+
+        query="CREATE TABLE IF NOT EXISTS livros(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, codigo NUMERC, quantidade NUMERIC, data TEXT, status NUMERIC, codigoTitulo NUMERIC, autor TEXT, editora TEXT)" #se a tabela produtos ainda não existir, crio uma
+        _executar(query)
 
     def getId(self):
         return self.__id
@@ -38,7 +42,7 @@ class Livro(Material):
         return super().exibir()
 
     def inserir(self):
-        query = f"INSERT INTO livros (nome, codigo, data, quantidade, status, codigoTitulo, autor, editora) VALUES ('{self.getNome()}', '{self.getCodigo()}', '{self.getData()}', {self.getQuantidade()}, '{self.getStatus()}', '{self.getCodigoTitulo()}', '{self.getAutor()}', '{self.getEditora()}')"
+        query = f"INSERT INTO livros (nome, codigo, data, quantidade, status, codigoTitulo, autor, editora) VALUES ('{self.getNome()}', '{int(self.getCodigo())}', '{self.getData()}', {int(self.getQuantidade())}, '{int(self.getStatus())}', '{int(self.getCodigoTitulo())}', '{self.getAutor()}', '{self.getEditora()}')"
         _executar(query)
 
     def alterar(self):
@@ -76,3 +80,7 @@ class Livro(Material):
             return livro
         else:
             return None
+
+    #to string
+    def __str__(self):
+        return f"'{self.__id}', '{self.__nome}', '{self.__autor}'"

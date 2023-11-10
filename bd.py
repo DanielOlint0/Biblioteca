@@ -14,3 +14,4 @@ def _executar(query):
     finally:
         cursor.close()
         connection.close()
+        return resultado
