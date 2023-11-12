@@ -61,25 +61,10 @@ class Livro(Material):
 
     @staticmethod
     def buscar_por_id(id):
-        query = f"SELECT * FROM livros WHERE id={id}"
-        resultado = _executar(query)
-
-        if resultado:
-            # Criar uma instância de Livro com os dados retornados do banco de dados
-            livro = Livro(
-                nome=resultado[0],
-                codigo=resultado[1],
-                data=resultado[2],
-                quantidade=resultado[3],
-                status=resultado[4],
-                codigoTitulo=resultado[5],
-                autor=resultado[6],
-                editora=resultado[7],
-                id=resultado[8]
-            )
-            return livro
-        else:
-            return None
+        query = f"SELECT * FROM livros WHERE id={int(id)}"
+        livro = _executar(query)[0]
+        livro = Livro(id = livro[0], nome = livro[1], codigo = livro[2], data=livro[3], quantidade=livro[4],status=livro[5], codigoTitulo=livro[6],autor=livro[7], editora=livro[8])
+        return livro
 
     #to string
     def __str__(self):
