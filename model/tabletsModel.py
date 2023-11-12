@@ -1,4 +1,4 @@
-from materiaisModel import Material
+from model.materiaisModel import Material
 from bd import _executar
 
 class Tablet(Material):
@@ -10,7 +10,7 @@ class Tablet(Material):
 
         query = """
             CREATE TABLE IF NOT EXISTS tablets(
-                id INTEGER AUTOINCREMENT PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT ,
                 nome TEXT,
                 data TEXT, 
                 quantidade REAL, 
@@ -38,13 +38,16 @@ class Tablet(Material):
     def setCodigoModelo(self, valor):
         self.__codigoModelo = valor
 
+    def exibir(self):
+        # Aqui você pode personalizar a exibição conforme necessário
+        return super().exibir()
 
     def salvar(self):
         query = f"""
             INSERT INTO tablets 
-            (id, nome, data, quantidade, status, marca, codigo, codigoModelo) 
+            (nome, data, quantidade, status, marca, codigo, codigoModelo) 
             VALUES 
-            ({int(self.__id)}, '{self._nome}', '{self._data}', {int(self._quantidade)}, {int(self._status)}, '{self.__marca}', {int(self._codigo)}, {int(self.__codigoModelo)})"""
+            ('{self._nome}', '{self._data}', '{int(self._quantidade)}', '{int(self._status)}', '{self.__marca}',' {int(self._codigo)}', '{int(self.__codigoModelo)}')"""
         
         _executar(query)
 
@@ -52,20 +55,20 @@ class Tablet(Material):
         query = f"""
             UPDATE tablets
             SET quantidade = {self._quantidade} - 1
-            WHERE id = {int(self.id)} 
+            WHERE id = {int(self.__id)} 
         """
         _executar(query)
 
     def detetar (self):
         query = f"""
             DELETE FROM tablets
-            WHERE id = {int(self.id)} 
+            WHERE id = {int(self.__id)} 
         """
         _executar(query)
     
     #Lista todos os tablets
     @classmethod
-    def getTablet():
+    def getTablets(self):
         query = """
             SELECT * FROM tablets
         """
@@ -87,6 +90,14 @@ class Tablet(Material):
 
         return tablet
     
+    @staticmethod
+    def buscar_por_id(id):
+        query = f"SELECT * FROM tablets WHERE id={int(id)}"
+        tablet = _executar(query)[0]
+        tablet = Tablet(id = tablet[0], nome = tablet[1], data= tablet[2], quantidade= tablet[3], status= tablet[4], marca = tablet[5],  codigoModelo= tablet[6], codigo = tablet[7])
+        return tablet
+
+
     #exibe a quantidade de tablets em um status específico
     def getTablet(self): 
         query = f"""
@@ -96,3 +107,6 @@ class Tablet(Material):
         """
         _executar(query)
 
+     #to string
+    def __str__(self):
+        return f"'{self.__id}', '{self._nome}', '{self.__marca}'"
