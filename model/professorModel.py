@@ -29,13 +29,13 @@ class Professor(Usuario):
 
     # Inserir
     def cadastrarProfessor(self):
-        query = f"INSERT INTO professores(nome, idade, turma, multa, qDeEmprestimos) VALUES ('{self.getNome()}', {int(self.getIdade())}, '{self.getTurma()}', '{float(self.getMulta())}', '{int(self.getQDeEmprestimos())}')"
+        query = f"INSERT INTO professores(nome, idade, turma, multa, qDeEmprestimos) VALUES ('{self.getNome()}', {int(self.getIdade())}, '{self.getTurma()}', '{float(self.getMulta())}', '{int(self.getQDeEmprestimo())}')"
         _executar(query)
         print("Professor Cadastrado!")
 
     # Alterar
     def alterarProfessor(self):
-        query = f"UPDATE professores SET nome='{self.getNome()}', idade='{int(self.getIdade())}', turma='{self.getTurma()}', multa='{float(self.getMulta())}', qDeEmprestimos='{int(self.getQDeEmprestimos())}' WHERE id={int(self.getId())}"
+        query = f"UPDATE professores SET nome='{self.getNome()}', idade='{int(self.getIdade())}', turma='{self.getTurma()}', multa='{float(self.getMulta())}', qDeEmprestimos='{int(self.getQDeEmprestimo())}' WHERE id={int(self.getId())}"
         _executar(query)
 
     # Excluir
@@ -78,3 +78,7 @@ Turma: {self.__turma}
 Multa: {self.getMulta()}
 Quantidade de Empréstimos: {self.getQDeEmprestimos()}
 """
+
+    #to string
+    def __str__(self):
+        return f"'{self._nome}', '{self._idade}'"
