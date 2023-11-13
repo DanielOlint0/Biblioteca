@@ -18,9 +18,9 @@ class Usuario(ABC):
         return self._multa
     def setMulta(self, valor):
         self._multa = valor
-    def getQDeEmprestimo(self):
+    def getQDeEmprestimos(self):
         return self._qDeEmprestimos
-    def setQDeEmprestimo(self, valor):
+    def setQDeEmprestimos(self, valor):
         self._qDeEmprestimos = valor
     
     @abstractmethod
