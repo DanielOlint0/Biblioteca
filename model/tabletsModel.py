@@ -52,11 +52,7 @@ class Tablet(Material):
         _executar(query)
 
     def alterar(self):
-        query = f"""
-            UPDATE tablets
-            SET quantidade = {self._quantidade} - 1
-            WHERE id = {int(self.__id)} 
-        """
+        query = f"UPDATE tablets SET status='{self._status}' WHERE id={self.getId()}"
         _executar(query)
 
     def detetar (self):
