@@ -48,41 +48,39 @@ class Usuario:
             return True
 
     # Inserir
-    def cadastrarProfessor(self):
-        query = f"INSERT INTO usuarios(nome, idade, turma, multa, qDeEmprestimos, tipoDoUsuario) VALUES ('{self.getNome()}', {int(self.getIdade())}, '{self.getTurma()}', '{float(self.getMulta())}', '{int(self.getQDeEmprestimo())}')"
+    def cadastrarUsuario(self):
+        query = f"INSERT INTO usuarios(nome, idade, multa, qDeEmprestimos, tipoDoUsuario) VALUES ('{self.getNome()}', {int(self.getIdade())}, '{float(self.getMulta())}', '{int(self.getQDeEmprestimo())}', '{int(self.getTipoUsuario())}')"
         _executar(query)
-        print("Professor Cadastrado!")
+        print("Usuário Cadastrado!")
 
     # Alterar
-    def alterarProfessor(self):
-        query = f"UPDATE usuarios SET nome='{self.getNome()}', idade='{int(self.getIdade())}', multa='{float(self.getMulta())}', qDeEmprestimos='{int(self.getQDeEmprestimo())}'tipoDoUsuario='{int(self.getTipoUsuario())} , ' WHERE id={int(self.getId())}"
+    def alterarUsuario(self):
+        query = f"UPDATE usuarios SET nome='{self.getNome()}', idade='{int(self.getIdade())}', multa='{float(self.getMulta())}', qDeEmprestimos='{int(self.getQDeEmprestimo())}', tipoDoUsuario='{int(self.getTipoUsuario())}' WHERE id={int(self.getId())}"
         _executar(query)
 
     # Excluir
-    def excluirProfessor(self):
+    def excluirUsuario(self):
         query = f"DELETE FROM usuarios WHERE id={int(self.getId())}"
         _executar(query)
 
     # Listar professores cadastrados.
     @staticmethod
-    def listarProfessores():
+    def listarUsuarios():
         query = "SELECT * FROM usuarios"
         professores = _executar(query)
         return professores
 
     # Buscar professor pelo ID.
     @staticmethod
-    def listarProfessor(id):
+    def listarUsuarioPorId(id):
         query = f"SELECT * FROM usuarios WHERE id={int(id)}"
         resultado = _executar(query)[0]
         if resultado:
             usuario = Usuario(
                 nome=resultado[1],
                 idade=resultado[2],
-                turma=resultado[3],
-                multa=resultado[4],
-                qDeEmprestimos=resultado[5],
-                tipoDoUsuario=resultado[6],
+                multa=resultado[3],
+                tipoDoUsuario=resultado[4],
                 id=resultado[0]
             )
             return usuario
@@ -102,4 +100,4 @@ Tipo do usuario: {self.getTipoUsuario()}
 
     #to string
     def __str__(self):
-        return f"'{self._nome}', '{self._idade}'"
+        return f"'{self.__nome}', '{self.__idade}'"
