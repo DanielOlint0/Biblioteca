@@ -1,15 +1,16 @@
 from bd import _executar
+from datetime import date, timedelta
 
 class RegistroDeEmprestimo:
-    def __init__(self, dataInicio, dataFinal, codigoUsuario=None, codigoMaterial=None, id=None):
-        self.__dataInicio = dataInicio
+    def __init__(self, codigoUsuario, codigoMaterial, dataInicio, dataFinal, status=1, id = None):
+        self.__dataInicio= dataInicio
         self.__dataFinal = dataFinal
         self.__codigoUsuario = codigoUsuario
         self.__codigoMaterial = codigoMaterial
         self.__id = id
-        self.__ativo = 1
+        self.__status = status
 
-        query = "CREATE TABLE IF NOT EXISTS RegistroDeEmprestimo(id INTEGER AUTOINCREMENT PRIMARY KEY, nome TEXT, preco REAL, status NUMERIC)"
+        query = "CREATE TABLE IF NOT EXISTS RegistroDeEmprestimo(id INTEGER PRIMARY KEY AUTOINCREMENT, codigoMaterial INTEGER, codigoUsuario INTEGER, status INTEGER, dataInicio DATE, dataFinal DATE)"
         _executar(query)
    
     def getDataInicio(self):
@@ -32,31 +33,36 @@ class RegistroDeEmprestimo:
     def setCodigoMaterial(self, valor):
         self.__codigoMaterial = valor
 
-    def getAtivo(self):
-        return self.__ativo
-    def setAtivo(self, valor):
-        self.__ativo = valor
+    def getStatus(self):
+        return self.__status
+    def setStatus(self, valor):
+        self.__status = valor
 
     def salvar(self):
-        query = f"INSERT INTO RegistroDeEmprestimo(dataInicio, dataFinal, codigoMateria, codigoUsuario) VALUES ({self.__dataInicio}, {self.__dataFinal}, {int(self.__codigoMaterial)}, {int(self.__codigoUsuario)})"
+        query = f"INSERT INTO RegistroDeEmprestimo(codigoMaterial, codigoUsuario, status, dataInicio, dataFinal) VALUES ('{int(self.__codigoMaterial)}', '{int(self.__codigoUsuario)}','{self.__status}', '{self.__dataInicio}', '{self.__dataFinal}')"
         _executar(query)
+
     def alterar(self):
         query = f"UPDATE RegistroDeEmprestimo SET status = {int(self.__status)} WHERE id = {int(self.__id)}"
         _executar(query)
+        
     def excluir(self):
             query = f"DELETE FROM RegistroDeEmprestimo WHERE id = {int(self.__id)}"
             _executar(query)
-    
+
+    @staticmethod
+    def buscar_por_id(id):
+        query = f"SELECT * FROM RegistroDeEmprestimo WHERE id={int(id)}"
+        registro = _executar(query)[0]
+        registro = RegistroDeEmprestimo(id=registro[0], codigoMaterial=registro[1], codigoUsuario=registro[2], status=registro[3], dataInicio=registro[4], dataFinal=registro[5])
+
+        return registro
+
     @staticmethod
     def get_registros():
-        query = "SELECT * FROM RegistroDeEmprestimo"
+        query = f"SELECT * FROM RegistroDeEmprestimo"
         registros = _executar(query)
-        return registros
-    @staticmethod
-    def get_produto():
-        query = f"SELECT * FROM RegistroDeEmprestimo WHERE id ={int(id)}"
-        _executar(query)[0]
-        registro = RegistroDeEmprestimo(id=registro[0]),
-        registro = RegistroDeEmprestimo(nome=registro[1]),
-        registro = RegistroDeEmprestimo(preco=registro[2])
-        return registro
+        return registros  
+    
+    def __str__(self):
+        return f"{self.__codigoMaterial}, {self.__codigoUsuario}, {self.__status}"
