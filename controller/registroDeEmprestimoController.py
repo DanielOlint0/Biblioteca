@@ -36,3 +36,9 @@ class Busca():
         registros = RegistroDeEmprestimo.get_registros()
         for registro in registros:
             print(registro)
+
+class Multa():
+    @staticmethod
+    def get(id, data):
+        multaRegistro = RegistroDeEmprestimo.valorMulta(id, data)
+        print(multaRegistro)

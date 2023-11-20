@@ -1,5 +1,5 @@
 from bd import _executar
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 class RegistroDeEmprestimo:
     def __init__(self, codigoUsuario, codigoMaterial, dataInicio, dataFinal, status=1, id = None):
@@ -51,6 +51,19 @@ class RegistroDeEmprestimo:
             _executar(query)
 
     @staticmethod
+    def valorMulta(id, data):
+        registro = RegistroDeEmprestimo.buscar_por_id(id)
+        dataFinal = registro.getDataFinal()
+        if isinstance(dataFinal, str):
+            dataFinal = datetime.strptime(dataFinal, '%Y-%m-%d').date()
+        if data > dataFinal:
+            diasAtraso = (data - dataFinal).days
+            multa = diasAtraso * 2
+            return f"Multa atual: R$ {multa}"
+        else:
+            return 0
+
+    @staticmethod
     def buscar_por_id(id):
         query = f"SELECT * FROM RegistroDeEmprestimo WHERE id={int(id)}"
         registro = _executar(query)[0]
@@ -65,4 +78,4 @@ class RegistroDeEmprestimo:
         return registros  
     
     def __str__(self):
-        return f"{self.__codigoMaterial}, {self.__codigoUsuario}, {self.__status}"
+        return f"{self.__codigoMaterial}, {self.__status}"
