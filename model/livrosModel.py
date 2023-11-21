@@ -2,7 +2,7 @@ from bd import _executar
 from model.materiaisModel import Material
 
 class Livro(Material):
-    def __init__(self, nome, codigo, data, quantidade, status, codigoTitulo, autor, editora, id=None):
+    def __init__(self, nome, codigo, data, quantidade, codigoTitulo, autor, editora, status = 1, id=None):
         super().__init__(nome, codigo, data, quantidade, status)
         self.__codigoTitulo = codigoTitulo
         self.__autor = autor
@@ -68,4 +68,4 @@ class Livro(Material):
 
     #to string
     def __str__(self):
-        return f"'{self.__id}', '{self.__nome}', '{self.__autor}'"
+        return f"'{self.__id}', '{self.__nome}', '{self.__autor}', '{self._status}'"

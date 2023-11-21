@@ -2,8 +2,8 @@ from model.livrosModel import Livro
 
 class AdicionarLivroController:
     @staticmethod
-    def post(nome, codigo, data, quantidade, status, codigo_titulo, autor, editora, id=None):
-        livro = Livro(nome, codigo, data, quantidade, status, codigo_titulo, autor, editora, id)
+    def post(nome, codigo, data, quantidade, codigo_titulo, autor, editora):
+        livro = Livro(nome, codigo, data, quantidade, codigo_titulo, autor, editora)
         livro.inserir()
 
 class AtualizarLivroController:
