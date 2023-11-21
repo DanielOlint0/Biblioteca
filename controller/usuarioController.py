@@ -2,17 +2,23 @@ from model.usuarioModel import Usuario
 
 class Adicionar:
     @staticmethod
-    def post(nome, idade, multa, tipoDeUsuario):
-        usuario = Usuario(nome, idade, multa, tipoDeUsuario)
+    def post(nome, idade, tipoDeUsuario):
+        usuario = Usuario(nome, idade, tipoDeUsuario)
         usuario.cadastrarUsuario()
 
 class Atualizar:
     @staticmethod
-    def get(id, nome, idade):
+    def get(id):
         usuario = Usuario.listarUsuarioPorId(id)
-        usuario.setNome(nome)
-        usuario.setIdade(idade)
         usuario.alterarUsuario()
+        print(usuario)
+
+class Devolver:
+    @staticmethod
+    def get(id):
+        usuario = Usuario.listarUsuarioPorId(id)
+        usuario.devolver()
+        print(usuario)
 
 class Apagar:
     @staticmethod
