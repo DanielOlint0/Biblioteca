@@ -3,8 +3,8 @@ from bd import _executar
 
 class Adicionar:
     @staticmethod
-    def post(nome, codigo, data, quantidade, status, marca, codigoModelo):
-        tablet = Tablet(nome, codigo, data, quantidade, status, marca, codigoModelo)
+    def post(nome, codigo, data, quantidade, marca, codigoModelo):
+        tablet = Tablet(nome, codigo, data, quantidade, marca, codigoModelo)
         tablet.salvar()
 
 class Atualizar:
@@ -13,7 +13,7 @@ class Atualizar:
         tablet = Tablet.buscar_por_id(id)
         tablet.setStatus(status)
         tablet.alterar()
-
+        
 class Apagar:
     @staticmethod
     def get(id):

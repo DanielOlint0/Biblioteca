@@ -2,7 +2,7 @@ from model.materiaisModel import Material
 from bd import _executar
 
 class Tablet(Material):
-    def __init__(self, nome, codigo, data, quantidade, status, marca, codigoModelo, id = None):
+    def __init__(self, nome, codigo, data, quantidade, marca, codigoModelo, status=1, id = None):
         super().__init__(nome, codigo, data, quantidade, status)
         self.__marca = marca
         self.__codigoModelo = codigoModelo
@@ -105,4 +105,4 @@ class Tablet(Material):
 
      #to string
     def __str__(self):
-        return f"'{self.__id}', '{self._nome}', '{self.__marca}'"
+        return f"'{self.__id}', '{self._nome}', '{self.__marca}', '{self._status}'"
