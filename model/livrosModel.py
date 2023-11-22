@@ -10,7 +10,7 @@ class Livro(Material):
         self.__id = id
         self.__nome = nome
 
-        query="CREATE TABLE IF NOT EXISTS livros(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, codigo NUMERC, quantidade NUMERIC, data TEXT, status NUMERIC, codigoTitulo NUMERIC, autor TEXT, editora TEXT)" #se a tabela produtos ainda não existir, crio uma
+        query="CREATE TABLE IF NOT EXISTS livros(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, codigo NUMERIC, quantidade NUMERIC, data TEXT, status NUMERIC, codigoTitulo NUMERIC, autor TEXT, editora TEXT)" #se a tabela produtos ainda não existir, crio uma
         _executar(query)
 
     def getId(self):
@@ -65,6 +65,13 @@ class Livro(Material):
         livro = _executar(query)[0]
         livro = Livro(id = livro[0], nome = livro[1], codigo = livro[2], data=livro[3], quantidade=livro[4],status=livro[5], codigoTitulo=livro[6],autor=livro[7], editora=livro[8])
         return livro
+
+    # Função para verificar o status do livro
+    def verificar_status(self):
+        if self.getStatus() == 1:  # Verifica se o status é disponível para empréstimo
+            return True
+        else:
+            return False
 
     #to string
     def __str__(self):

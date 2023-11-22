@@ -103,6 +103,12 @@ class Tablet(Material):
         """
         _executar(query)
 
+    def verificar_status(self):
+        if self.getStatus() == 1:  # Verifica se o status é disponível para empréstimo
+            return True
+        else:
+            return False
+
      #to string
     def __str__(self):
         return f"'{self.__id}', '{self._nome}', '{self.__marca}', '{self._status}'"

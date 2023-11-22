@@ -6,6 +6,12 @@ class Adicionar:
         registro = RegistroDeEmprestimo(codigoUsuario, codigoMaterial,dataInicio, dataFinal)
         registro.salvar()
 
+class Adicionar_tablet:
+    @staticmethod
+    def post(codigoUsuario, codigoMaterial, dataInicio, dataFinal):
+        registro = RegistroDeEmprestimo(codigoUsuario, codigoMaterial,dataInicio, dataFinal)
+        registro.salvar_tablet()
+
 class Atualizar:
     @staticmethod
     def get(id, status):

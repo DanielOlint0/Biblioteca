@@ -1,7 +1,7 @@
 from bd import _executar
 from datetime import date, timedelta, datetime
-from model.usuarioModel import Usuario
-
+from model.livrosModel import Livro 
+from model.tabletsModel import Tablet
 
 class RegistroDeEmprestimo:
     def __init__(self, codigoUsuario, codigoMaterial, dataInicio, dataFinal, status=1, id = None):
@@ -41,14 +41,21 @@ class RegistroDeEmprestimo:
         self.__status = valor
 
     def salvar(self):
-        usuario = Usuario.listarUsuarioPorId(self.__codigoUsuario)
-        #print(usuario.getQDeEmprestimo())
-        if usuario.getQDeEmprestimo() > 0:
+        livro = Livro.buscar_por_id(self.__codigoMaterial)  # Obtém o livro associado ao códigoMaterial
+        if livro.verificar_status():
             query = f"INSERT INTO RegistroDeEmprestimo(codigoMaterial, codigoUsuario, status, dataInicio, dataFinal) VALUES ('{int(self.__codigoMaterial)}', '{int(self.__codigoUsuario)}','{self.__status}', '{self.__dataInicio}', '{self.__dataFinal}')"
             _executar(query)
-            usuario.alterarUsuario()
         else:
-            print("Este usuário atingiu o limite de empréstimos")
+            print("O livro não está disponível para empréstimo.")
+
+    def salvar_tablet(self):
+        tablet = Tablet.buscar_por_id(self.__codigoMaterial)  # Obtém o livro associado ao códigoMaterial
+        if tablet.verificar_status():
+            query = f"INSERT INTO RegistroDeEmprestimo(codigoMaterial, codigoUsuario, status, dataInicio, dataFinal) VALUES ('{int(self.__codigoMaterial)}', '{int(self.__codigoUsuario)}','{self.__status}', '{self.__dataInicio}', '{self.__dataFinal}')"
+            _executar(query)
+        else:
+            print("O Tablet não está disponível para empréstimo.")
+
 
     def alterar(self):
         query = f"UPDATE RegistroDeEmprestimo SET status = {int(self.__status)} WHERE id = {int(self.__id)}"
