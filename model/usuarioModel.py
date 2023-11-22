@@ -49,7 +49,7 @@ class Usuario:
         _executar(query)
         print("Usuário Cadastrado!")
 
-    # Alterar
+
     # Alterar
     def devolver(self):
         self.setQDeEmprestimo(self.getQDeEmprestimo() + 1)
@@ -62,6 +62,10 @@ class Usuario:
             query = f"UPDATE usuarios SET qDeEmprestimos={int(self.getQDeEmprestimo())} WHERE id={int(self.getId())}"
             _executar(query)
         else: print("Limite de emprestimos excedido")
+
+    def alterarMultaUsuario(self):
+        query = f"UPDATE usuarios SET multa={float(self.__multa)} WHERE id={int(self.getId())}"
+        _executar(query)
 
     # Excluir
     def excluirUsuario(self):
