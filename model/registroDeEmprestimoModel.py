@@ -1,5 +1,7 @@
 from bd import _executar
 from datetime import date, timedelta, datetime
+from model.usuarioModel import Usuario
+
 
 class RegistroDeEmprestimo:
     def __init__(self, codigoUsuario, codigoMaterial, dataInicio, dataFinal, status=1, id = None):
@@ -39,8 +41,14 @@ class RegistroDeEmprestimo:
         self.__status = valor
 
     def salvar(self):
-        query = f"INSERT INTO RegistroDeEmprestimo(codigoMaterial, codigoUsuario, status, dataInicio, dataFinal) VALUES ('{int(self.__codigoMaterial)}', '{int(self.__codigoUsuario)}','{self.__status}', '{self.__dataInicio}', '{self.__dataFinal}')"
-        _executar(query)
+        usuario = Usuario.listarUsuarioPorId(self.__codigoUsuario)
+        #print(usuario.getQDeEmprestimo())
+        if usuario.getQDeEmprestimo() > 0:
+            query = f"INSERT INTO RegistroDeEmprestimo(codigoMaterial, codigoUsuario, status, dataInicio, dataFinal) VALUES ('{int(self.__codigoMaterial)}', '{int(self.__codigoUsuario)}','{self.__status}', '{self.__dataInicio}', '{self.__dataFinal}')"
+            _executar(query)
+            usuario.alterarUsuario()
+        else:
+            print("Este usuário atingiu o limite de empréstimos")
 
     def alterar(self):
         query = f"UPDATE RegistroDeEmprestimo SET status = {int(self.__status)} WHERE id = {int(self.__id)}"
