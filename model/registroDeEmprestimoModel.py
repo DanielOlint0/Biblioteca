@@ -2,6 +2,7 @@ from bd import _executar
 from datetime import date, timedelta, datetime
 from model.livrosModel import Livro 
 from model.tabletsModel import Tablet
+from model.usuarioModel import Usuario
 
 class RegistroDeEmprestimo:
     def __init__(self, codigoUsuario, codigoMaterial, dataInicio, dataFinal, status=1, id = None):
@@ -42,11 +43,13 @@ class RegistroDeEmprestimo:
 
     def salvar(self):
         livro = Livro.buscar_por_id(self.__codigoMaterial)  # Obtém o livro associado ao códigoMaterial
-        if livro.verificar_status():
+        usuario = Usuario.listarUsuarioPorId(self.__codigoUsuario)
+        if livro.verificar_status() and usuario.getQDeEmprestimo() > 0:
             query = f"INSERT INTO RegistroDeEmprestimo(codigoMaterial, codigoUsuario, status, dataInicio, dataFinal) VALUES ('{int(self.__codigoMaterial)}', '{int(self.__codigoUsuario)}','{self.__status}', '{self.__dataInicio}', '{self.__dataFinal}')"
             _executar(query)
+            usuario.alterarUsuario()
         else:
-            print("O livro não está disponível para empréstimo.")
+            print(f"O livro está: {livro.verificar_status()} e a quantidade de empréstimos do usuário está: {usuario.getQDeEmprestimo()}")
 
     def salvar_tablet(self):
         tablet = Tablet.buscar_por_id(self.__codigoMaterial)  # Obtém o livro associado ao códigoMaterial
