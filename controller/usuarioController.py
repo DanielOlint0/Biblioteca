@@ -6,6 +6,7 @@ class Adicionar:
         usuario = Usuario(nome, idade, tipoDeUsuario)
         usuario.cadastrarUsuario()
 
+    #pegar
 class Atualizar:
     @staticmethod
     def get(id):
