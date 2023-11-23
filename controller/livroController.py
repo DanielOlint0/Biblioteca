@@ -2,8 +2,8 @@ from model.livrosModel import Livro
 
 class AdicionarLivroController:
     @staticmethod
-    def post(nome, codigo, data, quantidade, codigo_titulo, autor, editora):
-        livro = Livro(nome, codigo, data, quantidade, codigo_titulo, autor, editora)
+    def post(nome, data, codigo_titulo, autor, editora):
+        livro = Livro(nome, data, codigo_titulo, autor, editora)
         livro.inserir()
 
 class AtualizarLivroController:
@@ -24,7 +24,7 @@ class ListarLivrosController:
     def get():
         livros = Livro.listar()
         for livro_info in livros:
-            print(f"ID: {livro_info[0]}, Nome: {livro_info[1]}, Autor: {livro_info[7]}, Status:{livro_info[5]}")
+            print(f"ID: {livro_info[0]}, Nome: {livro_info[1]}, Autor: {livro_info[5]}, Status:{livro_info[3]}")
 
 class BuscarLivroController:
     @staticmethod

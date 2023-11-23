@@ -2,15 +2,15 @@ from bd import _executar
 from model.materiaisModel import Material
 
 class Livro(Material):
-    def __init__(self, nome, codigo, data, quantidade, codigoTitulo, autor, editora, status = 1, id=None):
-        super().__init__(nome, codigo, data, quantidade, status)
+    def __init__(self, nome, data, codigoTitulo, autor, editora, status = 1, id=None):
+        super().__init__(nome, data, status)
         self.__codigoTitulo = codigoTitulo
         self.__autor = autor
         self.__editora = editora
         self.__id = id
         self.__nome = nome
 
-        query="CREATE TABLE IF NOT EXISTS livros(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, codigo NUMERIC, quantidade NUMERIC, data TEXT, status NUMERIC, codigoTitulo NUMERIC, autor TEXT, editora TEXT)" #se a tabela produtos ainda não existir, crio uma
+        query="CREATE TABLE IF NOT EXISTS livros(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, data TEXT, status NUMERIC, codigoTitulo NUMERIC, autor TEXT, editora TEXT)" #se a tabela produtos ainda não existir, crio uma
         _executar(query)
 
     def getId(self):
@@ -42,11 +42,11 @@ class Livro(Material):
         return super().exibir()
 
     def inserir(self):
-        query = f"INSERT INTO livros (nome, codigo, data, quantidade, status, codigoTitulo, autor, editora) VALUES ('{self.getNome()}', '{int(self.getCodigo())}', '{self.getData()}', {int(self.getQuantidade())}, '{int(self.getStatus())}', '{int(self.getCodigoTitulo())}', '{self.getAutor()}', '{self.getEditora()}')"
+        query = f"INSERT INTO livros (nome, data, status, codigoTitulo, autor, editora) VALUES ('{self.getNome()}', '{self.getData()}', '{int(self.getStatus())}', '{int(self.getCodigoTitulo())}', '{self.getAutor()}', '{self.getEditora()}')"
         _executar(query)
 
     def alterar(self):
-        query = f"UPDATE livros SET nome='{self.getNome()}', data='{self.getData()}', quantidade={self.getQuantidade()}, status='{self.getStatus()}', codigoTitulo='{self.getCodigoTitulo()}', autor='{self.getAutor()}', editora='{self.getEditora()}' WHERE id={self.getId()}"
+        query = f"UPDATE livros SET nome='{self.getNome()}', data='{self.getData()}', status='{self.getStatus()}', codigoTitulo='{self.getCodigoTitulo()}', autor='{self.getAutor()}', editora='{self.getEditora()}' WHERE id={self.getId()}"
         _executar(query)
 
     def excluir(self):
@@ -63,7 +63,7 @@ class Livro(Material):
     def buscar_por_id(id):
         query = f"SELECT * FROM livros WHERE id={int(id)}"
         livro = _executar(query)[0]
-        livro = Livro(id = livro[0], nome = livro[1], codigo = livro[2], data=livro[3], quantidade=livro[4],status=livro[5], codigoTitulo=livro[6],autor=livro[7], editora=livro[8])
+        livro = Livro(id = livro[0], nome = livro[1], data=livro[2], status=livro[3], codigoTitulo=livro[4],autor=livro[5], editora=livro[6])
         return livro
 
     # Função para verificar o status do livro

@@ -2,8 +2,8 @@ from model.materiaisModel import Material
 from bd import _executar
 
 class Tablet(Material):
-    def __init__(self, nome, codigo, data, quantidade, marca, codigoModelo, status=1, id = None):
-        super().__init__(nome, codigo, data, quantidade, status)
+    def __init__(self, nome, data, marca, codigoModelo, status=1, id = None):
+        super().__init__(nome, data, status)
         self.__marca = marca
         self.__codigoModelo = codigoModelo
         self.__id = id
@@ -12,11 +12,9 @@ class Tablet(Material):
             CREATE TABLE IF NOT EXISTS tablets(
                 id INTEGER PRIMARY KEY AUTOINCREMENT ,
                 nome TEXT,
-                data TEXT, 
-                quantidade REAL, 
+                data TEXT,  
                 status NUMERIC,
                 marca TEXT,
-                codigo INTEGER,
                 codigoModelo INTEGER
             )
         """
@@ -32,11 +30,6 @@ class Tablet(Material):
         return self.__marca
     def setMarca (self, valor):
         self.__marca = valor
-    
-    def getCodigoModelo(self):
-        return self.__codigoModelo
-    def setCodigoModelo(self, valor):
-        self.__codigoModelo = valor
 
     def exibir(self):
         # Aqui você pode personalizar a exibição conforme necessário
@@ -45,9 +38,9 @@ class Tablet(Material):
     def salvar(self):
         query = f"""
             INSERT INTO tablets 
-            (nome, data, quantidade, status, marca, codigo, codigoModelo) 
+            (nome, data, marca, codigoModelo, status) 
             VALUES 
-            ('{self._nome}', '{self._data}', '{int(self._quantidade)}', '{int(self._status)}', '{self.__marca}',' {int(self._codigo)}', '{int(self.__codigoModelo)}')"""
+            ('{self._nome}', '{self._data}', '{self.__marca}', '{int(self.__codigoModelo)}', '{int(self._status)}')"""
         
         _executar(query)
 
@@ -90,7 +83,7 @@ class Tablet(Material):
     def buscar_por_id(id):
         query = f"SELECT * FROM tablets WHERE id={int(id)}"
         tablet = _executar(query)[0]
-        tablet = Tablet(id = tablet[0], nome = tablet[1], data= tablet[2], quantidade= tablet[3], status= tablet[4], marca = tablet[5],  codigoModelo= tablet[6], codigo = tablet[7])
+        tablet = Tablet(id = tablet[0], nome = tablet[1], data= tablet[2], status= tablet[3], marca = tablet[4],  codigoModelo= tablet[5])
         return tablet
 
 

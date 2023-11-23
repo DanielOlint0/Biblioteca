@@ -3,8 +3,8 @@ from bd import _executar
 
 class Adicionar:
     @staticmethod
-    def post(nome, codigo, data, quantidade, marca, codigoModelo):
-        tablet = Tablet(nome, codigo, data, quantidade, marca, codigoModelo)
+    def post(nome, data, marca, codigoModelo):
+        tablet = Tablet(nome, data, marca, codigoModelo)
         tablet.salvar()
 
 class Atualizar:
