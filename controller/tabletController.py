@@ -1,33 +1,33 @@
 from model.tabletsModel import Tablet
 from bd import _executar
 
-class Adicionar:
+class AdicionarTablet:
     @staticmethod
     def post(nome, data, marca, codigoModelo):
         tablet = Tablet(nome, data, marca, codigoModelo)
         tablet.salvar()
 
-class Atualizar:
+class AtualizarTablet:
     @staticmethod
     def get(id, status):
         tablet = Tablet.buscar_por_id(id)
         tablet.setStatus(status)
         tablet.alterar()
         
-class Apagar:
+class ApagarTablet:
     @staticmethod
     def get(id):
         tablet = Tablet.buscar_por_id(id)
         tablet.detetar()
 
-class Listar:
+class ListarTablet:
     @staticmethod
     def get():
         tablets = Tablet.getTablets()
         for tablet in tablets:
             print(tablet)
 
-class Buscar:
+class BuscarTablet:
     @staticmethod
     def get(id):
         tablet = Tablet.buscar_por_id(id)

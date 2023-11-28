@@ -69,14 +69,17 @@ class RegistroDeEmprestimo:
             _executar(query)
 
     @staticmethod
-    def valorMulta(id, data):
+    def valorMulta( id, data):
         registro = RegistroDeEmprestimo.buscar_por_id(id)
         dataFinal = registro.getDataFinal()
+        idUsuario = Usuario.listarUsuarioPorId(registro.getCodigoUsuario())
         if isinstance(dataFinal, str):
             dataFinal = datetime.strptime(dataFinal, '%Y-%m-%d').date()
         if data > dataFinal:
             diasAtraso = (data - dataFinal).days
-            multa = diasAtraso * 2
+            multa = float(diasAtraso * 2)
+            idUsuario.setMulta(multa)
+            idUsuario.alterarMultaUsuario()
             return f"Multa atual: R$ {multa}"
         else:
             return 0
